@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analog Clock - Vanilla</title>
+
+    <style>
+      #face {
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        border: 5px solid black;
+      }
+
+      .hand {
+        width: 250px;
+        height: 10px;
+      }
+
+      .minute {
+        background-color: blue;
+      }
+
+      .hour {
+        background-color: darkred;
+        max-width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="face">
+      <div id="minute" class="hand minute"></div>
+      <div id="hour" class="hand hour"></div>
+    </div>
+  </body>
+</html>
