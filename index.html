@@ -20,14 +20,16 @@
         border: 5px solid black;
         border-radius: 50%;
         position: relative;
+        transform: rotate(90deg);
       }
 
       .hand {
         position: absolute;
         transform-origin: 100%;
         top: 50%;
-        width: 50%;
+        width: 200px;
         height: 10px;
+        border-radius: 10px;
       }
 
       .minute {
@@ -37,6 +39,10 @@
       .hour {
         background-color: black;
       }
+
+      .second {
+        background-color: blue;
+      }
     </style>
   </head>
   <body>
@@ -44,26 +50,25 @@
       <div class="clock">
         <div class="hand hour"></div>
         <div class="hand minute"></div>
+        <div class="hand second"></div>
       </div>
     </div>
 
     <script>
-      const minute = document.querySelector(".minute");
-      const hour = document.querySelector(".hour");
+      const minuteHand = document.querySelector(".minute");
+      const hourHand = document.querySelector(".hour");
+      const secondHand = document.querySelector(".second");
+      const ref = setInterval(() => {
+        const date = new Date();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const hours = date.getHours();
 
-      minute.animate(
-        [
-          // keyframes
-          { transform: "rotate(0deg)" },
-          { transform: "rotate(360deg)" },
-        ],
-        {
-          // timing options
-          duration: 60000,
-          iterations: Infinity,
-        }
-      );
-      const ref = setInterval(() => {}, 1000);
+        secondHand.style.transform = `rotate(${seconds * 6}deg)`;
+        minuteHand.style.transform = `rotate(${minutes * 6}deg)`;
+        hourHand.style.transform = `rotate(${hours * 30 + minutes / 2}deg)`;
+      }, 1000);
+      // hr_rotation = 30 * hr + min / 2; //converting current time
     </script>
   </body>
 </html>
