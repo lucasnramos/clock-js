@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Analog Clock 2 - Vanilla</title>
+    <title>Analog Clock - Vanilla</title>
 
     <style>
       html {
@@ -21,7 +21,7 @@
       .container {
         width: 100vw;
         height: 100vh;
-        background: darkgray;
+        background: #232323;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -30,49 +30,64 @@
       .clock {
         width: 400px;
         height: 400px;
-        background-color: black;
+        background-color: #efefef;
         border-radius: 100%;
-        border: 5px solid red;
+        border: 5px solid black;
         position: relative;
       }
 
       .hand {
         position: absolute;
+        z-index: 10;
         top: 50%;
         left: 50%;
         transform-origin: bottom center;
         transform: translateX(-50%) translateY(-100%);
+        background-color: black;
       }
 
       .hour {
         height: 25%;
         width: 10px;
-        background-color: blue;
         border-radius: 5px;
       }
 
       .minute {
         height: 35%;
         width: 6px;
-        background-color: green;
         border-radius: 3px;
       }
 
       .second {
         height: 45%;
         width: 2px;
-        background-color: red;
         border-radius: 1px;
+        background-color: red;
       }
 
       .dot {
+        z-index: 15;
         position: absolute;
-        top: 47%;
-        left: 47%;
+        top: 48%;
+        left: 48%;
         width: 20px;
         height: 20px;
         border-radius: 100%;
         background-color: black;
+      }
+
+      .face-number {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        font-size: 28px;
+        font-weight: bold;
+        font-family: "Times New Roman", Times, serif;
+        transform-origin: center;
       }
     </style>
   </head>
@@ -90,8 +105,46 @@
       const minuteHand = document.querySelector(".minute");
       const hourHand = document.querySelector(".hour");
       const secondHand = document.querySelector(".second");
+      const clockFace = document.querySelector(".clock");
 
+      const numerals = [
+        "XII",
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+      ];
+      const clock = document.querySelector(".clock");
+      // setup the first "render"
+      updateClock();
+
+      numerals.forEach((numeral, index) => {
+        const angle = ((index * 30 - 90) * Math.PI) / 180;
+        const radius = 42;
+        const x = 50 + radius * Math.cos(angle);
+        const y = 50 + radius * Math.sin(angle);
+
+        const numberElem = document.createElement("div");
+        numberElem.className = "face-number";
+        numberElem.style.left = `${x}%`;
+        numberElem.style.top = `${y}%`;
+        numberElem.style.transform = `translate(-50%, -50%)`;
+
+        numberElem.textContent = numeral;
+        clock.appendChild(numberElem);
+      });
       const ref = setInterval(() => {
+        updateClock();
+      }, 1000);
+
+      function updateClock() {
         const date = new Date();
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
@@ -106,7 +159,7 @@
         hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${
           hours * 30
         }deg)`;
-      }, 1000);
+      }
     </script>
   </body>
 </html>
